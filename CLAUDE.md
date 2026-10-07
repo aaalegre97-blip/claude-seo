@@ -312,3 +312,68 @@ After cutting a new release (git tag + `gh release create`), run:
 ```
 
 This generates a blog post on https://claude-seo.md/blog/, handles cover image generation, SEO metadata, FAQ schema, internal linking, sitemap/llms.txt updates, Vercel deployment, and Google indexing.
+
+## Which Marketing Tool to Use (Alegre Solutions routing rule)
+
+Three repos handle marketing work. Pick by **where the problem lives**, then say in one line which tool you're using and why before starting.
+
+- **claude-ads** (`aaalegre97-blip/claude-ads`): the **ad account manager**. Anything inside Ads Manager.
+- **claude-seo** (`aaalegre97-blip/claude-seo`): the **SEO technician**. Anything about ranking on Google or in Maps.
+- **marketingskills** (`aaalegre97-blip/marketingskills`): the **marketer**. The offer, the words, the landing page, and the follow-up after a lead comes in.
+
+**Rule of thumb:** inside Ads Manager → claude-ads. Rankings, Google Business Profile, site health → claude-seo. Offer, copy, page conversion, or lead follow-up → marketingskills.
+
+### Paid ads
+
+| The user says or needs… | Use | Skill / command |
+|---|---|---|
+| New client, brand, account setup | claude-ads | `/ads setup` |
+| "What's wrong with this account?", audit, wasted spend | claude-ads | `/ads audit meta` (or other platform) |
+| Budget, campaign structure, channel plan | claude-ads | `/ads plan`, `/ads budget` |
+| Fatigue, pacing, overspend, "is it still working?" | claude-ads | `/ads monitor` |
+| Kill / keep / scale decisions | claude-ads | `/ads optimize --draft` |
+| A/B test design or readout | claude-ads | `/ads test` |
+| Pixel, conversions API, tracking broken | claude-ads | `/ads tracking` |
+| Review a finished ad before launch | claude-ads | `/ads creative` |
+| Client ad performance report | claude-ads | `/ads report` |
+| Hooks, headlines, primary text, static ad layouts | marketingskills | `ad-creative` |
+
+### SEO
+
+| The user says or needs… | Use | Skill / command |
+|---|---|---|
+| Full website SEO audit | claude-seo | `/seo audit <url>` |
+| Google Business Profile, map pack, reviews, citations | claude-seo | `/seo local <url>`, `/seo maps` |
+| One page not ranking | claude-seo | `/seo page <url>` |
+| Site speed, indexing, crawl problems | claude-seo | `/seo technical <url>` |
+| Search Console, PageSpeed, GA4 data | claude-seo | `/seo google` |
+| SEO plan for a client | claude-seo | `/seo plan <business-type>` |
+| Keyword groups, service-area or city pages | claude-seo | `/seo cluster`, `/seo programmatic` |
+| Content brief for a blog or service page | claude-seo | `/seo content-brief` |
+| Schema markup | claude-seo | `/seo schema <url>` |
+| Showing up in AI answers (ChatGPT, AI Overviews) | claude-seo | `/seo geo <url>` |
+| Before/after tracking when changing a site | claude-seo | `/seo drift baseline`, `/seo drift compare` |
+
+marketingskills also has `seo-audit`, `ai-seo`, `schema`, `programmatic-seo` and `site-architecture`. Use claude-seo first for SEO because it runs real crawls and data pulls. Fall back to the marketingskills versions only if claude-seo isn't attached.
+
+### Offer, copy, conversion, follow-up
+
+| The user says or needs… | Use | Skill / command |
+|---|---|---|
+| Offer is weak (guarantee, bonus, urgency, pricing) | marketingskills | `offers`, `pricing` |
+| Website or landing page copy | marketingskills | `copywriting` |
+| Landing page not converting | marketingskills | `cro` |
+| Speed-to-lead texts, lead follow-up | marketingskills | `sms` |
+| Email nurture for leads that didn't book | marketingskills | `emails` |
+| Sales scripts, objection handling | marketingskills | `sales-enablement` |
+| Hiring cleaners or techs | marketingskills | `recruiting` |
+
+### Full flows
+
+- **Static ad:** `offers` → `ad-creative` (copy + layout) → build the image as HTML and export to PNG → `/ads creative` (pre-launch check) → after launch, `/ads audit meta` → `sms` / `emails` for follow-up.
+- **Local SEO for a new client:** `/seo audit` → `/seo local` → fix the Google Business Profile → `/seo programmatic` for service-area pages → `copywriting` for the page words → `/seo drift baseline` before changes go live.
+
+### Rules
+
+- **If the needed repo isn't in this session:** say which repo and skill is the right one and offer to attach it. Don't silently fall back to the wrong tool.
+- **Known gap:** none of the three has contractor-specific ad kill/scale thresholds or cost-per-booked-job targets. Flag this when giving kill/scale advice and judge against cost per booked job, not cost per lead.
